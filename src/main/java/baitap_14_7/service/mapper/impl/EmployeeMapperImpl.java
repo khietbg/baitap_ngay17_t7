@@ -5,16 +5,19 @@ import baitap_14_7.domain.Employee;
 import baitap_14_7.domain.Role;
 import baitap_14_7.service.dto.EmployeeDTO;
 import baitap_14_7.service.mapper.EmployeeMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Component
+
 public class EmployeeMapperImpl implements EmployeeMapper {
     @Override
     public Employee toEntity(EmployeeDTO dto) {
-        if (dto == null){
+        if (dto == null) {
             return null;
         }
 
@@ -28,7 +31,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
 
     @Override
     public EmployeeDTO toDto(Employee entity) {
-        if (entity == null){
+        if (entity == null) {
             return null;
         }
 
@@ -39,25 +42,25 @@ public class EmployeeMapperImpl implements EmployeeMapper {
         employeeDTO.setDepartmentId(entity.getDepartmentId());
 
         Department department = entity.getDepartment();
-        if (department != null){
-           employeeDTO.setDepartmentName(department.getName());
+        if (department != null) {
+            employeeDTO.setDepartmentName(department.getName());
         }
 
         Set<Role> roles = entity.getRoles();
-        if (roles != null){
-            employeeDTO.setRoles(roles.stream().map(Role::getName).collect(Collectors.toSet()));
+        if (roles != null) {
+            employeeDTO.setRoles(roles.stream().map(Role::getId).collect(Collectors.toSet()));
         }
         return employeeDTO;
     }
 
     @Override
     public List<Employee> toEntity(List<EmployeeDTO> dtoList) {
-        if (dtoList == null){
+        if (dtoList == null) {
             return null;
         }
 
         List<Employee> employees = new ArrayList<>();
-        for (EmployeeDTO dto:dtoList) {
+        for (EmployeeDTO dto : dtoList) {
             employees.add(toEntity(dto));
         }
         return employees;
@@ -65,12 +68,12 @@ public class EmployeeMapperImpl implements EmployeeMapper {
 
     @Override
     public List<EmployeeDTO> toDto(List<Employee> entityList) {
-        if (entityList == null){
+        if (entityList == null) {
             return null;
         }
 
         List<EmployeeDTO> dtoList = new ArrayList<>();
-        for (Employee e:entityList) {
+        for (Employee e : entityList) {
             dtoList.add(toDto(e));
         }
         return dtoList;

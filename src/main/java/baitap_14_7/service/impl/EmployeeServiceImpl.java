@@ -1,5 +1,7 @@
 package baitap_14_7.service.impl;
 
+import baitap_14_7.domain.Employee;
+import baitap_14_7.domain.Role;
 import baitap_14_7.repository.EmployeeRepository;
 import baitap_14_7.repository.RoleRepository;
 import baitap_14_7.service.EmployeeService;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -26,8 +30,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDTO save(EmployeeDTO notifyDTO) {
-        return null;
+    public EmployeeDTO save(EmployeeDTO employeeDTO) {
+        Employee employee = employeeMapper.toEntity(employeeDTO);
+        if (employeeDTO.getRoles() != null) {
+            Set<Role> roles = employeeDTO
+                    .getRoles()
+                    .stream()
+                    .map(roleRepository::findById)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toSet());
+            employee.setRoles(roles);
+        }
+        employee = employeeRepository.save(employee);
+        return employeeMapper.toDto(employee);
     }
 
     @Override

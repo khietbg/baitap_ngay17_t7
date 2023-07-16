@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 public interface EmployeeService {
-    EmployeeDTO save(EmployeeDTO notifyDTO);
+    EmployeeDTO save(EmployeeDTO employeeDTO);
 
     Page<EmployeeDTO> findAll(String textSearch, Pageable pageable);
 
