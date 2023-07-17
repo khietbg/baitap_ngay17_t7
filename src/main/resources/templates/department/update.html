@@ -1,43 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 <!--nav start-->
 <div th:insert="index::navbar"></div>
 <!--nav end-->
 
-
 <!--body start-->
 <form th:action="@{/apiDepartment/update}" th:object="${department}" method="post">
-  <table>
-    <tr>
-      <td><input type="hidden" th:field="*{id}"/></td>
-    </tr>
-    <tr>
-      <td>Name:</td>
-      <td><input type="text" th:field="*{name}"/></td>
-    </tr>
-    <tr>
-      <td>Description:</td>
-      <td><input type="text" th:field="*{description}"/></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><input type="submit" value="Update"></td>
-    </tr>
-  </table>
+    <table>
+        <tr>
+            <td><input type="hidden" th:field="*{id}"/></td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td><input type="text" th:field="*{description}"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Update"></td>
+        </tr>
+    </table>
 </form>
 <!--body end-->
 
 <!--footer start-->
 <div th:insert="index::footer"></div>
 <!--footer end-->
-
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
