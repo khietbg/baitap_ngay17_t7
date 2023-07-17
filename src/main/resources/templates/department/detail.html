@@ -8,20 +8,23 @@
 </head>
 <body>
 <!--nav start-->
-<div th:insert="index::navbar"></div>
+<div th:insert="~{layout/navbar.html}"></div>
 <!--nav end-->
 
 <!--body start-->
-<h2><a th:href="@{'/apiDepartment/formCreate'}" class="btn btn-success">Create Department</a></h2>
-<h2><a th:href="@{'/apiDepartment/back'}" class="btn btn-secondary">Back</a></h2>
-<form th:object="${department}">
-    <label>name: <span th:text="*{name}"></span></label><br>
-    <label>description: <span th:text="*{description}"></span></label>
-</form>
+<div style="margin-top: 100px">
+    <h2><a th:href="@{'/department/add'}" class="btn btn-success">Create Department</a></h2>
+    <h2><a th:href="@{'/department/back'}" class="btn btn-secondary">Back</a></h2>
+    <h3>Detail</h3>
+    <form th:object="${department}">
+        <label>name: <span th:text="*{name}"></span></label><br>
+        <label>description: <span th:text="*{description}"></span></label>
+    </form>
+</div>
 <!--body end-->
 
 <!--footer start-->
-<div th:insert="index::footer"></div>
+<div th:insert="~{layout/footer.html}"></div>
 <!--footer end-->
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

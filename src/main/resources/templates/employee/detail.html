@@ -8,21 +8,24 @@
 </head>
 <body>
 <!--nav start-->
-<div th:insert="index::navbar"></div>
+<div th:insert="~{layout/navbar.html}"></div>
 <!--nav end-->
 
 <!--body start-->
-<h2><a th:href="@{'/apiEmployee/formCreate'}" class="btn btn-success">Create Employee</a></h2>
-<h2><a th:href="@{'/apiEmployee/back'}" class="btn btn-secondary">Back</a></h2>
-<form th:object="${employee}">
-    <label>name : <span th:text="*{name}"></span></label><br>
-    <label>email : <span th:text="*{email}"></span></label><br>
-    <label>departmentName : <span th:text="*{departmentName}"></span></label>
-</form>
+<div style="margin-top: 100px">
+    <h2><a th:href="@{'/employee/add'}" class="btn btn-success">Create Employee</a></h2>
+    <h2><a th:href="@{'/employee/back'}" class="btn btn-secondary">Back</a></h2>
+    <h3>Detail</h3>
+    <form th:object="${employee}">
+        <label>name : <span th:text="*{name}"></span></label><br>
+        <label>email : <span th:text="*{email}"></span></label><br>
+        <label>departmentName : <span th:text="*{departmentName}"></span></label>
+    </form>
+</div>
 <!--body end-->
 
 <!--footer start-->
-<div th:insert="index::footer"></div>
+<div th:insert="~{layout/footer.html}"></div>
 <!--footer end-->
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

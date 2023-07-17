@@ -8,43 +8,47 @@
 </head>
 <body>
 <!--nav start-->
-<div th:insert="index::navbar"></div>
+<div th:insert="~{layout/navbar.html}"></div>
 <!--nav end-->
 
 <!--body start-->
-<p th:if="${message1!=null}" class="text-danger" th:text="${message1}">
-</p>
-<form th:action="@{/apiEmployee/create}" th:object="${employee}" method="post">
-    <table>
-        <tr>
-            <td>Name:</td>
-            <td><input type="text" th:field="*{name}"/></td>
-        </tr>
-        <tr>
-            <td>Email:</td>
-            <td><input type="text" th:field="*{email}"/></td>
-        </tr>
-    </table>
-    <div>
-        <p>DepartmentId</p>
-        <select th:field="*{departmentId}">
-            <option th:each="d : ${departments}" th:value="${d.id}" th:text="${d.name}"></option>
-        </select>
-    </div>
-    <div>
-        <p>RoleId</p>
-        <select th:field="*{roles}">
-            <option th:each="r : ${roles}" th:value="${r.id}" th:text="${r.name}"></option>
-        </select>
-    </div>
-    <div>
-        <input class="btn btn-success" type="submit" value="Create">
-    </div>
-</form>
+<div style="margin-top: 100px">
+    <p th:if="${message1!=null}" class="text-danger" th:text="${message1}">
+    </p>
+    <form th:action="@{/employee/add}" th:object="${employee}" method="post">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" th:field="*{name}"/></td>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" th:field="*{email}"/></td>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+            </tr>
+        </table>
+        <div>
+            <p>DepartmentId</p>
+            <select th:field="*{departmentId}">
+                <option th:each="d : ${departments}" th:value="${d.id}" th:text="${d.name}"></option>
+            </select>
+        </div>
+        <div>
+            <p>RoleId</p>
+            <select th:field="*{roles}">
+                <option th:each="r : ${roles}" th:value="${r.id}" th:text="${r.name}"></option>
+            </select>
+        </div>
+        <div>
+            <input class="btn btn-success" type="submit" value="Create">
+        </div>
+    </form>
+</div>
 <!--body end-->
 
 <!--footer start-->
-<div th:insert="index::footer"></div>
+<div th:insert="~{layout/footer.html}"></div>
 <!--footer end-->
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -1,6 +1,10 @@
 package baitap_14_7.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,11 +15,12 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
+    @Size(min = 5, message = "name from 5 character!")
+    @NotBlank(message = "Name is empty")
     @Column(name = "name")
     private String name;
-
-    @Column(name = "email")
+    @Email(message = "email invalid")
+    @NotBlank(message = "Name is empty")
     private String email;
 
     @Column(name = "department_id")

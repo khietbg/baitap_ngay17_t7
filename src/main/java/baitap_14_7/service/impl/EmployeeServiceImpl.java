@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -70,6 +71,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean existsByEmail(String email) {
         return employeeRepository.existsByEmail(email);
+    }
+
+    @Override
+    public List<EmployeeDTO> findAll() {
+        List<Employee> dtoList = employeeRepository.findAll();
+        return employeeMapper.toDto(dtoList);
     }
 
 }

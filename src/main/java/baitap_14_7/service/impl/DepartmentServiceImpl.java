@@ -29,8 +29,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Page<DepartmentDTO> findAll(Pageable pageable) {
-        return departmentRepository.findAll(pageable).map(departmentMapper::toDto);
+    public Page<DepartmentDTO> findAllByNameContainingIgnoreCase(String textSearch, Pageable pageable) {
+        return departmentRepository.findAllByNameContainingIgnoreCase(textSearch, pageable).map(departmentMapper::toDto);
     }
 
     @Override
@@ -48,5 +48,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         List<Department> list = departmentRepository.findAll();
         return departmentMapper.toDto(list);
     }
+
 
 }

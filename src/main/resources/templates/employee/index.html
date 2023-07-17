@@ -8,12 +8,12 @@
 </head>
 <body>
 <!--nav start-->
-<div th:insert="index::navbar"></div>
+<div th:insert="~{layout/navbar.html}"></div>
 <!--nav end-->
-
 <!--body start-->
-<h2><a th:href="@{'/apiEmployee/formCreate'}" class="btn btn-success">Create Employee</a></h2>
-<form th:action="@{/apiEmployee/}" method="get">
+<div style="margin-top: 100px">
+<h2><a th:href="@{'/employee/add'}" class="btn btn-success">Create Employee</a></h2>
+<form th:action="@{/employee/index}" method="get">
     <input type="text" name="textSearch" placeholder="textSearch"/>
     <button type="submit">Search</button>
 </form>
@@ -34,16 +34,17 @@
         <td th:text="${e.name}"></td>
         <td th:text="${e.email}"></td>
         <td th:text="${e.departmentName}"></td>
-        <td><a th:href="@{'/apiEmployee/delete/' + ${e.id}}">DELETE</a></td>
-        <td><a th:href="@{'/apiEmployee/edit/' + ${e.id}}">EDIT</a></td>
-        <td><a th:href="@{'/apiEmployee/detail/' + ${e.id}}">VIEW</a></td>
+        <td><a th:href="@{'/employee/delete/' + ${e.id}}">DELETE</a></td>
+        <td><a th:href="@{'/employee/edit/' + ${e.id}}">EDIT</a></td>
+        <td><a th:href="@{'/employee/detail/' + ${e.id}}">VIEW</a></td>
     </tr>
     </tbody>
 </table>
+</div>
 <!--body end-->
 
 <!--footer start-->
-<div th:insert="index::footer"></div>
+<div th:insert="~{layout/footer.html}"></div>
 <!--footer end-->
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

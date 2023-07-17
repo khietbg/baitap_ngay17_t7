@@ -1,6 +1,8 @@
 package baitap_14_7.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "dtb_department")
@@ -11,6 +13,8 @@ public class Department {
     private Long id;
 
     @Column(name = "name")
+    @Size(min = 5,message = "name from 5 character!")
+    @NotBlank(message = "Name is empty")
     private String name;
 
     @Column(name = "description")
