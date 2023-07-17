@@ -63,7 +63,7 @@ public class EmployeeController {
             return modelAndView;
         }
         employeeService.save(employeeDTO);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/findAll");
         return modelAndView;
     }
 
@@ -92,7 +92,7 @@ public class EmployeeController {
             modelAndView.addObject("message1", "email existed, please try again!");
         }
         employeeService.save(employeeDTO);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/findAll");
         return modelAndView;
     }
 
@@ -107,13 +107,13 @@ public class EmployeeController {
     @GetMapping("/delete/{id}")
     public ModelAndView deleteDepartment(@PathVariable("id") Long id) {
         employeeService.delete(id);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/findAll");
         return modelAndView;
     }
 
     @GetMapping("/back")
     public ModelAndView back() {
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/findAll");
         return modelAndView;
     }
 }

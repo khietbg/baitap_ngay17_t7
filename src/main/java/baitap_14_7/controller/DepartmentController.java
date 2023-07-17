@@ -37,7 +37,7 @@ public class DepartmentController {
     @PostMapping("/create")
     public ModelAndView createDepartment(@ModelAttribute("department") DepartmentDTO departmentDTO) {
         departmentService.save(departmentDTO);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/findAll");
         return modelAndView;
     }
     @GetMapping("/edit/{id}")
@@ -50,7 +50,7 @@ public class DepartmentController {
     @PostMapping("/update")
     public ModelAndView update(@ModelAttribute("department") DepartmentDTO departmentDTO) {
         departmentService.save(departmentDTO);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/findAll");
         return modelAndView;
     }
     @GetMapping("/detail/{id}")
@@ -64,12 +64,12 @@ public class DepartmentController {
     @GetMapping("/delete/{id}")
     public ModelAndView deleteDepartment(@PathVariable("id") Long id) {
         departmentService.delete(id);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/findAll");
         return modelAndView;
     }
     @GetMapping("/back")
     public ModelAndView back(){
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/findAll");
         return modelAndView;
     }
 
