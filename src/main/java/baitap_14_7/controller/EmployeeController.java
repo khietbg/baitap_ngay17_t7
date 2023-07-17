@@ -31,7 +31,7 @@ public class EmployeeController {
         this.roleRepository = roleRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping("/findAll")
     public ModelAndView findAll(@RequestParam(name = "textSearch", required = false, defaultValue = "") String textSearch, Pageable pageable) {
         Page<EmployeeDTO> page = employeeService.findAllByNameContainingIgnoreCase(textSearch, pageable);
         ModelAndView modelAndView = new ModelAndView("employee/employeeList");

@@ -20,7 +20,7 @@ public class DepartmentController {
         this.departmentRepository = departmentRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping("/findAll")
     public ModelAndView findAll(Pageable pageable) {
         Page<DepartmentDTO> page = departmentService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("department/departmentList");
