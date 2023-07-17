@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,8 +8,7 @@
 </head>
 <body>
 <div th:insert="~{layout/navbar.html}"></div>
-<div style="margin-top: 100px">
-    <h1>this is layout</h1>
+<div style="margin-top: 100px" layout:fragment="content">
 </div>
 <div th:insert="~{layout/footer.html}"></div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

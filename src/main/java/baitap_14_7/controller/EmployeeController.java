@@ -52,7 +52,7 @@ public class EmployeeController {
     @PostMapping("/add")
     public ModelAndView doAdd(@Valid @ModelAttribute("employee") EmployeeDTO employeeDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView("employee/add");
+            ModelAndView modelAndView = new ModelAndView("employee/add",bindingResult.getModel());
             modelAndView.addObject("employee", new EmployeeDTO());
             List<DepartmentDTO> dtoList = departmentService.getAll();
             modelAndView.addObject("departments", dtoList);

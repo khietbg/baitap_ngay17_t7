@@ -9,8 +9,6 @@ import java.util.Set;
 
 public class EmployeeDTO {
     private Long id;
-
-    @Column(name = "name")
     @NotBlank(message = "Name is mandatory")
     @Size(min = 5, message = "name from 5 character!")
     private String name;
