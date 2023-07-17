@@ -5,14 +5,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "employee")
+@Table(name = "dtb_employee")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "department_id")
     private Long departmentId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Department department;

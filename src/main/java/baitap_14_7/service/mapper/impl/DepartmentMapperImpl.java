@@ -3,10 +3,11 @@ package baitap_14_7.service.mapper.impl;
 import baitap_14_7.domain.Department;
 import baitap_14_7.service.dto.DepartmentDTO;
 import baitap_14_7.service.mapper.DepartmentMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 public class DepartmentMapperImpl implements DepartmentMapper {
     @Override
     public Department toEntity(DepartmentDTO dto) {

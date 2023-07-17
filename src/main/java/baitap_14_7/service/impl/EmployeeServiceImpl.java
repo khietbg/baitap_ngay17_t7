@@ -47,17 +47,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Page<EmployeeDTO> findAll(String textSearch, Pageable pageable) {
-        return null;
+    public Page<EmployeeDTO> findAllByNameContainingIgnoreCase(String textSearch, Pageable pageable) {
+        return employeeRepository.findAllByNameContainingIgnoreCase(textSearch, pageable).map(employeeMapper::toDto);
     }
 
     @Override
     public Optional<EmployeeDTO> findOne(Long id) {
-        return Optional.empty();
+        return employeeRepository.findById(id).map(employeeMapper::toDto);
     }
 
     @Override
     public void delete(Long id) {
-
+        employeeRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<EmployeeDTO> findByEmail(String email) {
+        Optional<EmployeeDTO> employee = employeeRepository.findByEmail(email).map(employeeMapper::toDto);
+        return employee;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return employeeRepository.existsByEmail(email);
+    }
+
 }
