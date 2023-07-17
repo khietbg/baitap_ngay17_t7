@@ -20,12 +20,12 @@
             <tr>
                 <td>Name:</td>
                 <td><input type="text" th:field="*{name}"/></td>
-                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                <p th:if="${#fields.hasErrors('name')}" th:errors="${#fields.errors('name')}"></p>
             </tr>
             <tr>
                 <td>Email:</td>
                 <td><input type="text" th:field="*{email}"/></td>
-                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                <p th:if="${#fields.hasErrors('email')}" th:errors="${#fields.errors('email')}"></p>
             </tr>
         </table>
         <div>

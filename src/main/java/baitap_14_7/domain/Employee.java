@@ -16,11 +16,11 @@ public class Employee {
     @Column(name = "id")
     private Long id;
     @Size(min = 5, message = "name from 5 character!")
-    @NotBlank(message = "Name is empty")
+    @NotBlank(message = "Name is mandatory")
     @Column(name = "name")
     private String name;
     @Email(message = "email invalid")
-    @NotBlank(message = "Name is empty")
+    @NotBlank(message = "Name is mandatory")
     private String email;
 
     @Column(name = "department_id")

@@ -7,11 +7,9 @@ import baitap_14_7.service.dto.EmployeeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -41,11 +39,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/add")
-    public ModelAndView doAdd(@ModelAttribute("department") @Valid DepartmentDTO departmentDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView("department/add");
-            return modelAndView;
-        }
+    public ModelAndView doAdd(@ModelAttribute("department") DepartmentDTO departmentDTO) {
         departmentService.save(departmentDTO);
         ModelAndView modelAndView = new ModelAndView("redirect:/department/index");
         return modelAndView;
@@ -60,10 +54,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/edit")
-    public ModelAndView doEdit(@Valid @ModelAttribute("department") DepartmentDTO departmentDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return new ModelAndView("department/edit");
-        }
+    public ModelAndView doEdit(@ModelAttribute("department") DepartmentDTO departmentDTO) {
         departmentService.save(departmentDTO);
         ModelAndView modelAndView = new ModelAndView("redirect:/department/index");
         return modelAndView;

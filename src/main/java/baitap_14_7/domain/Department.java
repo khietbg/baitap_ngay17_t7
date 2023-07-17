@@ -13,8 +13,6 @@ public class Department {
     private Long id;
 
     @Column(name = "name")
-    @Size(min = 5,message = "name from 5 character!")
-    @NotBlank(message = "Name is empty")
     private String name;
 
     @Column(name = "description")
