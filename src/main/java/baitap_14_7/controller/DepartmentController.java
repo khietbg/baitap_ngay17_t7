@@ -10,51 +10,49 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/apiDepartment")
+@RequestMapping("/department")
 public class DepartmentController {
     private final DepartmentService departmentService;
-    private final DepartmentRepository departmentRepository;
 
-    public DepartmentController(DepartmentService departmentService, DepartmentRepository departmentRepository) {
+    public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
-        this.departmentRepository = departmentRepository;
     }
 
-    @GetMapping("/findAll")
-    public ModelAndView findAll(Pageable pageable) {
+    @GetMapping("/index")
+    public ModelAndView index(Pageable pageable) {
         Page<DepartmentDTO> page = departmentService.findAll(pageable);
-        ModelAndView modelAndView = new ModelAndView("department/departmentList");
+        ModelAndView modelAndView = new ModelAndView("department/index");
         modelAndView.addObject("page",page);
         return modelAndView;
     }
-    @GetMapping("/formCreate")
-    public ModelAndView formCreate(){
-       ModelAndView modelAndView = new ModelAndView("department/create");
+    @GetMapping("/add")
+    public ModelAndView showAdd(){
+       ModelAndView modelAndView = new ModelAndView("department/add");
        modelAndView.addObject("department",new DepartmentDTO());
         return modelAndView;
     }
 
-    @PostMapping("/create")
-    public ModelAndView createDepartment(@ModelAttribute("department") DepartmentDTO departmentDTO) {
+    @PostMapping("/add")
+    public ModelAndView doAdd(@ModelAttribute("department") DepartmentDTO departmentDTO) {
         departmentService.save(departmentDTO);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/findAll");
+        ModelAndView modelAndView = new ModelAndView("redirect:/department/index");
         return modelAndView;
     }
     @GetMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable Long id){
+    public ModelAndView showEdit(@PathVariable Long id){
         DepartmentDTO departmentDTO = departmentService.findOne(id).get();
-        ModelAndView modelAndView = new ModelAndView("/department/update");
+        ModelAndView modelAndView = new ModelAndView("department/edit");
         modelAndView.addObject("department",departmentDTO);
         return modelAndView;
     }
-    @PostMapping("/update")
-    public ModelAndView update(@ModelAttribute("department") DepartmentDTO departmentDTO) {
+    @PostMapping("/edit")
+    public ModelAndView doEdit(@ModelAttribute("department") DepartmentDTO departmentDTO) {
         departmentService.save(departmentDTO);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/findAll");
+        ModelAndView modelAndView = new ModelAndView("redirect:/department/index");
         return modelAndView;
     }
     @GetMapping("/detail/{id}")
-    public ModelAndView findById(@PathVariable Long id){
+    public ModelAndView showDetail(@PathVariable Long id){
         DepartmentDTO departmentDTO = departmentService.findOne(id).get();
         ModelAndView modelAndView = new ModelAndView("/department/detail");
         modelAndView.addObject("department",departmentDTO);
@@ -62,14 +60,14 @@ public class DepartmentController {
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteDepartment(@PathVariable("id") Long id) {
+    public ModelAndView doDelete(@PathVariable("id") Long id) {
         departmentService.delete(id);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/findAll");
+        ModelAndView modelAndView = new ModelAndView("redirect:/department/index");
         return modelAndView;
     }
     @GetMapping("/back")
     public ModelAndView back(){
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiDepartment/findAll");
+        ModelAndView modelAndView = new ModelAndView("redirect:/department/index");
         return modelAndView;
     }
 

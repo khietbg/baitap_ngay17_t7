@@ -19,29 +19,27 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/apiEmployee")
 public class EmployeeController {
-    private final EmployeeRepository employeeRepository;
     private final EmployeeService employeeService;
     private final DepartmentService departmentService;
     private final RoleRepository roleRepository;
 
-    public EmployeeController(EmployeeRepository employeeRepository, EmployeeService employeeService, DepartmentService departmentService, RoleRepository roleRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeController(EmployeeService employeeService, DepartmentService departmentService, RoleRepository roleRepository) {
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.roleRepository = roleRepository;
     }
 
-    @GetMapping("/findAll")
+    @GetMapping("/index")
     public ModelAndView findAll(@RequestParam(name = "textSearch", required = false, defaultValue = "") String textSearch, Pageable pageable) {
         Page<EmployeeDTO> page = employeeService.findAllByNameContainingIgnoreCase(textSearch, pageable);
-        ModelAndView modelAndView = new ModelAndView("employee/employeeList");
+        ModelAndView modelAndView = new ModelAndView("department/index");
         modelAndView.addObject("page", page);
         return modelAndView;
     }
 
-    @GetMapping("/formCreate")
-    public ModelAndView formCreate() {
-        ModelAndView modelAndView = new ModelAndView("employee/create");
+    @GetMapping("/add")
+    public ModelAndView showAdd() {
+        ModelAndView modelAndView = new ModelAndView("employee/add");
         modelAndView.addObject("employee", new EmployeeDTO());
         List<DepartmentDTO> dtoList = departmentService.getAll();
         modelAndView.addObject("departments", dtoList);
@@ -50,10 +48,10 @@ public class EmployeeController {
         return modelAndView;
     }
 
-    @PostMapping("/create")
-    public ModelAndView createDepartment(@ModelAttribute("department") EmployeeDTO employeeDTO) {
+    @PostMapping("/add")
+    public ModelAndView doAdd(@ModelAttribute("department") EmployeeDTO employeeDTO) {
         if (employeeService.existsByEmail(employeeDTO.getEmail())) {
-            ModelAndView modelAndView = new ModelAndView("employee/create");
+            ModelAndView modelAndView = new ModelAndView("employee/add");
             modelAndView.addObject("employee", new EmployeeDTO());
             List<DepartmentDTO> dtoList = departmentService.getAll();
             modelAndView.addObject("departments", dtoList);
@@ -63,14 +61,14 @@ public class EmployeeController {
             return modelAndView;
         }
         employeeService.save(employeeDTO);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/findAll");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/index");
         return modelAndView;
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable Long id) {
         EmployeeDTO employeeDTO = employeeService.findOne(id).get();
-        ModelAndView modelAndView = new ModelAndView("/employee/update");
+        ModelAndView modelAndView = new ModelAndView("edit");
         modelAndView.addObject("employee", employeeDTO);
         List<DepartmentDTO> dtoList = departmentService.getAll();
         modelAndView.addObject("departments", dtoList);
@@ -79,11 +77,11 @@ public class EmployeeController {
         return modelAndView;
     }
 
-    @PostMapping("/update")
-    public ModelAndView update(@ModelAttribute("employee") EmployeeDTO employeeDTO) {
+    @PostMapping("/edit")
+    public ModelAndView doEdit(@ModelAttribute("employee") EmployeeDTO employeeDTO) {
         Optional<EmployeeDTO> employeeByEmail = employeeService.findByEmail(employeeDTO.getEmail());
         if (employeeByEmail.isPresent() && employeeByEmail.get().getId() != employeeDTO.getId()) {
-            ModelAndView modelAndView = new ModelAndView("/employee/update");
+            ModelAndView modelAndView = new ModelAndView("employee/edit");
             modelAndView.addObject("employee", employeeDTO);
             List<DepartmentDTO> dtoList = departmentService.getAll();
             modelAndView.addObject("departments", dtoList);
@@ -92,7 +90,7 @@ public class EmployeeController {
             modelAndView.addObject("message1", "email existed, please try again!");
         }
         employeeService.save(employeeDTO);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/findAll");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/index");
         return modelAndView;
     }
 
@@ -105,15 +103,15 @@ public class EmployeeController {
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteDepartment(@PathVariable("id") Long id) {
+    public ModelAndView doDelete(@PathVariable("id") Long id) {
         employeeService.delete(id);
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/findAll");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/index");
         return modelAndView;
     }
 
     @GetMapping("/back")
     public ModelAndView back() {
-        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/findAll");
+        ModelAndView modelAndView = new ModelAndView("redirect:/apiEmployee/index");
         return modelAndView;
     }
 }
