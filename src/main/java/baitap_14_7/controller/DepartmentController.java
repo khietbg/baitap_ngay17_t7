@@ -4,7 +4,6 @@ import baitap_14_7.service.DepartmentService;
 import baitap_14_7.service.EmployeeService;
 import baitap_14_7.service.dto.DepartmentDTO;
 import baitap_14_7.service.dto.EmployeeDTO;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +24,8 @@ public class DepartmentController {
 
     @GetMapping("/index")
     public ModelAndView index(@RequestParam(name = "textSearch", required = false, defaultValue = "") String textSearch, Pageable pageable) {
-        Page<DepartmentDTO> page = departmentService.findAllByNameContainingIgnoreCase(textSearch, pageable);
         ModelAndView modelAndView = new ModelAndView("department/index");
-        modelAndView.addObject("page", page);
+        modelAndView.addObject("page", departmentService.findAllByNameContainingIgnoreCase(textSearch, pageable));
         return modelAndView;
     }
 
@@ -47,9 +45,8 @@ public class DepartmentController {
 
     @GetMapping("/edit/{id}")
     public ModelAndView showEdit(@PathVariable Long id) {
-        DepartmentDTO departmentDTO = departmentService.findOne(id).get();
         ModelAndView modelAndView = new ModelAndView("department/edit");
-        modelAndView.addObject("department", departmentDTO);
+        modelAndView.addObject("department", departmentService.findOne(id).get());
         return modelAndView;
     }
 
@@ -62,9 +59,8 @@ public class DepartmentController {
 
     @GetMapping("/detail/{id}")
     public ModelAndView showDetail(@PathVariable Long id) {
-        DepartmentDTO departmentDTO = departmentService.findOne(id).get();
         ModelAndView modelAndView = new ModelAndView("/department/detail");
-        modelAndView.addObject("department", departmentDTO);
+        modelAndView.addObject("department", departmentService.findOne(id).get());
         return modelAndView;
     }
 

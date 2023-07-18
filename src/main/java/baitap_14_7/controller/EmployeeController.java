@@ -1,12 +1,9 @@
 package baitap_14_7.controller;
 
-import baitap_14_7.domain.Role;
 import baitap_14_7.repository.RoleRepository;
 import baitap_14_7.service.DepartmentService;
 import baitap_14_7.service.EmployeeService;
-import baitap_14_7.service.dto.DepartmentDTO;
 import baitap_14_7.service.dto.EmployeeDTO;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -32,9 +28,8 @@ public class EmployeeController {
 
     @GetMapping("/index")
     public ModelAndView findAll(@RequestParam(name = "textSearch", required = false, defaultValue = "") String textSearch, Pageable pageable) {
-        Page<EmployeeDTO> page = employeeService.findAllByNameContainingIgnoreCase(textSearch, pageable);
         ModelAndView modelAndView = new ModelAndView("employee/index");
-        modelAndView.addObject("page", page);
+        modelAndView.addObject("page", employeeService.findAllByNameContainingIgnoreCase(textSearch, pageable));
         return modelAndView;
     }
 
@@ -42,31 +37,25 @@ public class EmployeeController {
     public ModelAndView showAdd() {
         ModelAndView modelAndView = new ModelAndView("employee/add");
         modelAndView.addObject("employee", new EmployeeDTO());
-        List<DepartmentDTO> dtoList = departmentService.getAll();
-        modelAndView.addObject("departments", dtoList);
-        List<Role> roles = roleRepository.findAll();
-        modelAndView.addObject("roles", roles);
+        modelAndView.addObject("departments", departmentService.getAll());
+        modelAndView.addObject("roles", roleRepository.findAll());
         return modelAndView;
     }
 
     @PostMapping("/add")
     public ModelAndView doAdd(@Valid @ModelAttribute("employee") EmployeeDTO employeeDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView("employee/add",bindingResult.getModel());
+            ModelAndView modelAndView = new ModelAndView("employee/add", bindingResult.getModel());
             modelAndView.addObject("employee", new EmployeeDTO());
-            List<DepartmentDTO> dtoList = departmentService.getAll();
-            modelAndView.addObject("departments", dtoList);
-            List<Role> roles = roleRepository.findAll();
-            modelAndView.addObject("roles", roles);
+            modelAndView.addObject("departments", departmentService.getAll());
+            modelAndView.addObject("roles", roleRepository.findAll());
             return modelAndView;
         }
         if (employeeService.existsByEmail(employeeDTO.getEmail())) {
             ModelAndView modelAndView = new ModelAndView("employee/add");
             modelAndView.addObject("employee", new EmployeeDTO());
-            List<DepartmentDTO> dtoList = departmentService.getAll();
-            modelAndView.addObject("departments", dtoList);
-            List<Role> roles = roleRepository.findAll();
-            modelAndView.addObject("roles", roles);
+            modelAndView.addObject("departments", departmentService.getAll());
+            modelAndView.addObject("roles", roleRepository.findAll());
             modelAndView.addObject("message1", "email existed, please try again!");
             return modelAndView;
         }
@@ -80,10 +69,8 @@ public class EmployeeController {
         EmployeeDTO employeeDTO = employeeService.findOne(id).get();
         ModelAndView modelAndView = new ModelAndView("employee/edit");
         modelAndView.addObject("employee", employeeDTO);
-        List<DepartmentDTO> dtoList = departmentService.getAll();
-        modelAndView.addObject("departments", dtoList);
-        List<Role> roles = roleRepository.findAll();
-        modelAndView.addObject("roles", roles);
+        modelAndView.addObject("departments", departmentService.getAll());
+        modelAndView.addObject("roles", roleRepository.findAll());
         return modelAndView;
     }
 
@@ -92,20 +79,16 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("employee/edit");
             modelAndView.addObject("employee", new EmployeeDTO());
-            List<DepartmentDTO> dtoList = departmentService.getAll();
-            modelAndView.addObject("departments", dtoList);
-            List<Role> roles = roleRepository.findAll();
-            modelAndView.addObject("roles", roles);
+            modelAndView.addObject("departments", departmentService.getAll());
+            modelAndView.addObject("roles", roleRepository.findAll());
             return modelAndView;
         }
         Optional<EmployeeDTO> employeeByEmail = employeeService.findByEmail(employeeDTO.getEmail());
         if (employeeByEmail.isPresent() && employeeByEmail.get().getId() != employeeDTO.getId()) {
             ModelAndView modelAndView = new ModelAndView("employee/edit");
             modelAndView.addObject("employee", employeeDTO);
-            List<DepartmentDTO> dtoList = departmentService.getAll();
-            modelAndView.addObject("departments", dtoList);
-            List<Role> roles = roleRepository.findAll();
-            modelAndView.addObject("roles", roles);
+            modelAndView.addObject("departments", departmentService.getAll());
+            modelAndView.addObject("roles", roleRepository.findAll());
             modelAndView.addObject("message1", "email existed, please try again!");
         }
         employeeService.save(employeeDTO);
@@ -115,9 +98,8 @@ public class EmployeeController {
 
     @GetMapping("/detail/{id}")
     public ModelAndView findById(@PathVariable Long id) {
-        EmployeeDTO employeeDTO = employeeService.findOne(id).get();
         ModelAndView modelAndView = new ModelAndView("/employee/detail");
-        modelAndView.addObject("employee", employeeDTO);
+        modelAndView.addObject("employee", employeeService.findOne(id).get());
         return modelAndView;
     }
 
